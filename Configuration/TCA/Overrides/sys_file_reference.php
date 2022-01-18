@@ -6,17 +6,7 @@ $newSysFileReferenceColumns = [
     'track_language' => [
         'label' => 'LLL:EXT:videos/Resources/Private/Language/locallang_be.xlf:track_language',
         'config' => [
-            'type' => 'select',
-            'renderType' => 'selectSingle',
-            'special' => 'languages',
-            'items' => [
-                [
-                    'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                    -1,
-                    'flags-multiple'
-                ],
-            ],
-            'default' => 0,
+            'type' => 'language',
         ]
     ],
     'track_type' => [
