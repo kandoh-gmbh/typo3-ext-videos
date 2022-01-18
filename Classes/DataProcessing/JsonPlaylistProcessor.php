@@ -152,7 +152,7 @@ class JsonPlaylistProcessor implements DataProcessorInterface
             if ($file->getOriginalFile()->getProperty('poster')) {
                 /** @var FileRepository $fileRepository */
                 $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-                $fileObjects = $fileRepository->findByRelation('sys_file_metadata', 'poster', $file->getOriginalFile()->_getMetaData()['uid']);
+                $fileObjects = $fileRepository->findByRelation('sys_file_metadata', 'poster', $file->getOriginalFile()->getMetaData()->get()['uid']);
 
                 if (isset($fileObjects[0])) {
                     /** @var FileReference $posterFile */
@@ -173,7 +173,7 @@ class JsonPlaylistProcessor implements DataProcessorInterface
 
                 /** @var FileRepository $fileRepository */
                 $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-                $fileObjects = $fileRepository->findByRelation('sys_file_metadata', 'tracks', $file->getOriginalFile()->_getMetaData()['uid']);
+                $fileObjects = $fileRepository->findByRelation('sys_file_metadata', 'tracks', $file->getOriginalFile()->getMetaData()->get()['uid']);
 
                 /** @var FileReference $fileObject */
                 foreach ($fileObjects as $key => $fileObject) {
