@@ -1,32 +1,32 @@
 {
-  "name": "wapplersystems/videos",
-  "type": "typo3-cms-extension",
-  "description": "Video player for playlists with cue points in timeline and subtitles",
-  "license": "GPL-2.0-or-later",
-  "keywords": [
-    "TYPO3",
-    "extension",
-    "video",
-    "video",
-    "videos",
-    "playlist",
-    "markers",
-    "cue points",
-    "tracks"
-  ],
-  "homepage": "https://wappler.systems",
-  "require": {
-    "typo3/cms-core": "^8.7.8",
-    "typo3/cms-filemetadata" : "^8.7.8"
-  },
-  "autoload": {
-    "psr-4": {
-      "WapplerSystems\\Videos\\": "Classes"
-    }
-  },
-  "extra": {
-    "typo3/cms": {
-      "videos": "videos"
-    }
-  }
+	"name": "wapplersystems/videos",
+	"type": "typo3-cms-extension",
+	"description": "Video player for playlists with cue points in timeline and subtitles",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"TYPO3",
+		"extension",
+		"video",
+		"video",
+		"videos",
+		"playlist",
+		"markers",
+		"cue points",
+		"tracks"
+	],
+	"homepage": "https://wappler.systems",
+	"require": {
+		"typo3/cms-core": "^11.5.0",
+		"typo3/cms-filemetadata": "^11.5.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"WapplerSystems\\Videos\\": "Classes"
+		}
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "videos"
+		}
+	}
 }

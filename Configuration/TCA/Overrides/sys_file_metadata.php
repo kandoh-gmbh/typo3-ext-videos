@@ -10,7 +10,7 @@ call_user_func(
             'poster' => [
                 'exclude' => 1,
                 'l10n_mode' => 'mergeIfNotBlank',
-                'label' => 'LLL:EXT:'.$extKey.'/Resources/Private/Language/locallang_be.xlf:poster',
+                'label' => 'LLL:EXT:videos/Resources/Private/Language/locallang_be.xlf:poster',
                 'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                     'poster',
                     [
@@ -44,7 +44,7 @@ call_user_func(
             'tracks' => [
                 'exclude' => 1,
                 'l10n_mode' => 'mergeIfNotBlank',
-                'label' => 'LLL:EXT:'.$extKey.'/Resources/Private/Language/locallang_be.xlf:tracks',
+                'label' => 'LLL:EXT:videos/Resources/Private/Language/locallang_be.xlf:tracks',
                 'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                     'tracks',
                     [
