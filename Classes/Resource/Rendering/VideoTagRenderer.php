@@ -14,12 +14,11 @@ namespace WapplerSystems\Videos\Resource\Rendering;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Resource\Rendering\FileRendererInterface;
+use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -46,7 +45,7 @@ class VideoTagRenderer implements FileRendererInterface
      */
     public function getPriority()
     {
-        return 1;
+        return 100;
     }
 
     /**
@@ -109,7 +108,7 @@ class VideoTagRenderer implements FileRendererInterface
             /** @var FileRepository $fileRepository */
             $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 
-            $fileObjects = $fileRepository->findByRelation('sys_file_metadata', 'poster', $file->getOriginalFile()->_getMetaData()['uid']);
+            $fileObjects = $fileRepository->findByRelation('sys_file_metadata', 'poster', $file->getOriginalFile()->getMetaData()['uid']);
 
             if (isset($fileObjects[0])) {
                 /** @var FileReference $posterFile */
@@ -128,7 +127,7 @@ class VideoTagRenderer implements FileRendererInterface
             /** @var FileRepository $fileRepository */
             $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 
-            $fileObjects = $fileRepository->findByRelation('sys_file_metadata', 'tracks', $file->getOriginalFile()->_getMetaData()['uid']);
+            $fileObjects = $fileRepository->findByRelation('sys_file_metadata', 'tracks', $file->getOriginalFile()->getMetaData()['uid']);
 
             /** @var FileReference $fileObject */
             foreach ($fileObjects as $key => $fileObject) {
@@ -136,26 +135,16 @@ class VideoTagRenderer implements FileRendererInterface
                 $trackLanguage = $fileObject->getProperty('track_language');
                 $trackType = $fileObject->getProperty('track_type');
                 $languageTitle = LocalizationUtility::translate('language.default', 'videos');
-                $isoCode = $GLOBALS['TSFE']->sys_language_isocode;
 
-                if ($trackLanguage > 0) {
-                    /** @var QueryBuilder $queryBuilder */
-                    $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_language');
-                    $languageRecord = $queryBuilder
-                        ->select('*')
-                        ->from('sys_language')
-                        ->where(
-                            $queryBuilder->expr()->eq(
-                                'uid',
-                                $queryBuilder->createNamedParameter($trackLanguage, \PDO::PARAM_INT)
-                            )
-                        )
-                        ->execute()
-                        ->fetch();
+                $defaultLanguage = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($GLOBALS['TSFE']->id)->getDefaultLanguage();
 
-                    if ($languageRecord) {
-                        $languageTitle = $languageRecord['title'];
-                        $isoCode = $languageRecord['language_isocode'];
+                $isoCode = $defaultLanguage->getTwoLetterIsoCode();
+
+                if ($trackLanguage > -1) {
+                    $language = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($GLOBALS['TSFE']->id)->getLanguageById($trackLanguage);
+                    if ($language) {
+                        $languageTitle = $language->getTitle();
+                        $isoCode = $language->getTwoLetterIsoCode();
                     }
                 }
 
