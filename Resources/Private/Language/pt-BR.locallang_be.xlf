@@ -12,8 +12,8 @@
         <target state="needs-translation">Cue point</target>
       </trans-unit>
       <trans-unit id="tx_videos_domain_model_cuepoint.title">
-        <source>Titel</source>
-        <target state="needs-translation">Titel</target>
+        <source>Title</source>
+        <target state="needs-translation">Title</target>
       </trans-unit>
       <trans-unit id="tx_videos_domain_model_cuepoint.position">
         <source>Position</source>
