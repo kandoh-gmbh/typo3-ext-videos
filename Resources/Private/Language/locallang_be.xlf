@@ -10,7 +10,7 @@
 				<source>Cue point</source>
 			</trans-unit>
 			<trans-unit id="tx_videos_domain_model_cuepoint.title">
-				<source>Titel</source>
+				<source>Title</source>
 			</trans-unit>
 			<trans-unit id="tx_videos_domain_model_cuepoint.position">
 				<source>Position</source>
