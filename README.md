@@ -3,7 +3,7 @@ TYPO3 Extension for managing video poster image, tracks, subtitles, chapters and
 
 ## What does it do?
 
-* It adds fields to the metadata: poster image, tracks
+* It adds fields to the metadata: poster image, aspect ratio, tracks
 * It enhances the VideoTagRenderer
 * It uses the video.js player to show playlists
 
