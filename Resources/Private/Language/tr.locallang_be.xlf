@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" product-name="videos" date="2014-01-05T14:38:32+01:00" target-language="tr">
+    <header/>
+    <body>
+      <trans-unit id="tx_videos_domain_model_cuepoint.plural">
+        <source>Cue points</source>
+        <target state="needs-translation">Cue points</target>
+      </trans-unit>
+      <trans-unit id="tx_videos_domain_model_cuepoint.singular">
+        <source>Cue point</source>
+        <target state="needs-translation">Cue point</target>
+      </trans-unit>
+      <trans-unit id="tx_videos_domain_model_cuepoint.title">
+        <source>Title</source>
+        <target state="needs-translation">Title</target>
+      </trans-unit>
+      <trans-unit id="tx_videos_domain_model_cuepoint.position">
+        <source>Position</source>
+        <target state="needs-translation">Position</target>
+      </trans-unit>
+      <trans-unit id="poster">
+        <source>Poster</source>
+        <target state="needs-translation">Poster</target>
+      </trans-unit>
+      <trans-unit id="muted">
+        <source>Muted</source>
+        <target state="needs-translation">Muted</target>
+      </trans-unit>
+      <trans-unit id="loop">
+        <source>Loop</source>
+        <target state="needs-translation">Loop</target>
+      </trans-unit>
+      <trans-unit id="aspectRatio">
+        <source>Aspect ratio</source>
+        <target state="needs-translation">Aspect ratio</target>
+      </trans-unit>
+      <trans-unit id="show_related_videos">
+        <source>Show related videos from other channels (YouTube only)</source>
+        <target state="needs-translation">Show related videos from other channels (YouTube only)</target>
+      </trans-unit>
+      <trans-unit id="tracks">
+        <source>Tracks</source>
+        <target state="needs-translation">Tracks</target>
+      </trans-unit>
+      <trans-unit id="track_language">
+        <source>Track language</source>
+        <target state="needs-translation">Track language</target>
+      </trans-unit>
+      <trans-unit id="track_type">
+        <source>Track type</source>
+        <target state="needs-translation">Track type</target>
+      </trans-unit>
+      <trans-unit id="track_type.subtitles">
+        <source>Subtitles</source>
+        <target state="needs-translation">Subtitles</target>
+      </trans-unit>
+      <trans-unit id="track_type.captions">
+        <source>Captions</source>
+        <target state="needs-translation">Captions</target>
+      </trans-unit>
+      <trans-unit id="track_type.descriptions">
+        <source>Descriptions</source>
+        <target state="needs-translation">Descriptions</target>
+      </trans-unit>
+      <trans-unit id="track_type.chapters">
+        <source>Chapters</source>
+        <target state="needs-translation">Chapters</target>
+      </trans-unit>
+      <trans-unit id="track_type.metadata">
+        <source>Metadata</source>
+        <target state="needs-translation">Metadata</target>
+      </trans-unit>
+      <trans-unit id="tt_content.videos">
+        <source>Videos</source>
+        <target state="needs-translation">Videos</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
