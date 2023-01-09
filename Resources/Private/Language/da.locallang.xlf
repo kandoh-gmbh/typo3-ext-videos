@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" product-name="videos" date="2014-01-05T14:38:32+01:00" target-language="da">
+    <header/>
+    <body>
+      <trans-unit id="language.default">
+        <source>Default</source>
+        <target state="needs-translation">Default</target>
+      </trans-unit>
+      <trans-unit id="javascript_disabled">
+        <source><![CDATA[To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>]]></source>
+        <target state="needs-translation"><![CDATA[To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>]]></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
