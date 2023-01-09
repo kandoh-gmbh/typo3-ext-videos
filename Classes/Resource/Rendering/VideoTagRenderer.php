@@ -1,18 +1,14 @@
 <?php
-namespace WapplerSystems\Videos\Resource\Rendering;
+declare(strict_types=1);
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the "videos" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
  */
+
+namespace WapplerSystems\Videos\Resource\Rendering;
 
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference;
@@ -93,10 +89,10 @@ class VideoTagRenderer implements FileRendererInterface
         if (!empty($options['autoplay'])) {
             $attributes[] = 'autoplay';
         }
-        if (!empty($options['muted'])) {
+        if (!empty($options['muted']) || $file->getProperty('muted')) {
             $attributes[] = 'muted';
         }
-        if (!empty($options['loop'])) {
+        if (!empty($options['loop']) || $file->getProperty('loop')) {
             $attributes[] = 'loop';
         }
 

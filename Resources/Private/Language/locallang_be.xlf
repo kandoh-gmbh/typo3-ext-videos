@@ -19,6 +19,18 @@
 			<trans-unit id="poster">
 				<source>Poster</source>
 			</trans-unit>
+			<trans-unit id="muted">
+				<source>Muted</source>
+			</trans-unit>
+			<trans-unit id="loop">
+				<source>Loop</source>
+			</trans-unit>
+			<trans-unit id="aspectRatio">
+				<source>Aspect ratio</source>
+			</trans-unit>
+			<trans-unit id="show_related_videos">
+				<source>Show related videos from other channels (YouTube only)</source>
+			</trans-unit>
 			<trans-unit id="tracks">
 				<source>Tracks</source>
 			</trans-unit>

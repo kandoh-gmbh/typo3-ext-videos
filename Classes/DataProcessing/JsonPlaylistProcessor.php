@@ -1,26 +1,21 @@
 <?php
-namespace WapplerSystems\Videos\DataProcessing;
+declare(strict_types=1);
 
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * This file is part of the "videos" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
  */
+
+namespace WapplerSystems\Videos\DataProcessing;
+
 
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Resource\FileRepository;
-use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -69,10 +64,11 @@ class JsonPlaylistProcessor implements DataProcessorInterface
      */
     public function process(
         ContentObjectRenderer $cObj,
-        array $contentObjectConfiguration,
-        array $processorConfiguration,
-        array $processedData
-    ) {
+        array                 $contentObjectConfiguration,
+        array                 $processorConfiguration,
+        array                 $processedData
+    )
+    {
         if (isset($processorConfiguration['if.']) && !$cObj->checkIf($processorConfiguration['if.'])) {
             return $processedData;
         }
@@ -125,7 +121,6 @@ class JsonPlaylistProcessor implements DataProcessorInterface
             $defaultValue
         );
     }
-
 
 
     /**
@@ -220,7 +215,5 @@ class JsonPlaylistProcessor implements DataProcessorInterface
 
             $this->jsonData[] = $video;
         }
-
-        //DebugUtility::debug($this->jsonData);
     }
 }

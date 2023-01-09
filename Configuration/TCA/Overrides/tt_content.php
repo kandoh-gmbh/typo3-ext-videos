@@ -1,7 +1,17 @@
 <?php
+declare(strict_types=1);
 
+/*
+ * This file is part of the "videos" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
+use TYPO3\CMS\Core\Resource\Filter\FileExtensionFilter;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
+ExtensionManagementUtility::addPlugin(
     [
         'Video Playlist',
         'videos_playlist',
@@ -40,7 +50,7 @@ $GLOBALS['TCA']['tt_content']['types']['videos_playlist'] = [
             'config' => [
                 'filter' => [
                     0 => [
-                        'userFunc' => \TYPO3\CMS\Core\Resource\Filter\FileExtensionFilter::class . '->filterInlineChildren',
+                        'userFunc' => FileExtensionFilter::class . '->filterInlineChildren',
                         'parameters' => [
                             'allowedFileExtensions' => 'mp4',
                         ]
