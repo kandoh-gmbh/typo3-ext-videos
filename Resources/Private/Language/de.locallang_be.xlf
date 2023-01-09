@@ -5,39 +5,39 @@
     <body>
       <trans-unit id="tx_videos_domain_model_cuepoint.plural">
         <source>Cue points</source>
-        <target state="needs-translation">Cue points</target>
+        <target state="translated">Sprungmarken</target>
       </trans-unit>
       <trans-unit id="tx_videos_domain_model_cuepoint.singular">
         <source>Cue point</source>
-        <target state="needs-translation">Cue point</target>
+        <target state="translated">Sprungmarke</target>
       </trans-unit>
       <trans-unit id="tx_videos_domain_model_cuepoint.title">
-        <source>Titel</source>
-        <target state="needs-translation">Titel</target>
+        <source>Title</source>
+        <target state="needs-translation">Title</target>
       </trans-unit>
       <trans-unit id="tx_videos_domain_model_cuepoint.position">
         <source>Position</source>
-        <target state="needs-translation">Position</target>
+        <target state="translated">Position</target>
       </trans-unit>
       <trans-unit id="poster">
         <source>Poster</source>
-        <target state="needs-translation">Poster</target>
+        <target state="translated">Vorschaubild</target>
       </trans-unit>
       <trans-unit id="muted">
         <source>Muted</source>
-        <target state="needs-translation">Muted</target>
+        <target state="translated">Stumm geschaltet</target>
       </trans-unit>
       <trans-unit id="loop">
         <source>Loop</source>
-        <target state="needs-translation">Loop</target>
+        <target state="translated">Endlosschleife</target>
       </trans-unit>
       <trans-unit id="aspectRatio">
         <source>Aspect ratio</source>
-        <target state="needs-translation">Aspect ratio</target>
+        <target state="translated">Seitenverhältnis</target>
       </trans-unit>
       <trans-unit id="show_related_videos">
         <source>Show related videos from other channels (YouTube only)</source>
-        <target state="needs-translation">Show related videos from other channels (YouTube only)</target>
+        <target state="translated">Ähnliche Videos von anderen Kanälen anzeigen (nur YouTube)</target>
       </trans-unit>
       <trans-unit id="tracks">
         <source>Tracks</source>
@@ -53,27 +53,27 @@
       </trans-unit>
       <trans-unit id="track_type.subtitles">
         <source>Subtitles</source>
-        <target state="needs-translation">Subtitles</target>
+        <target state="translated">Untertitel</target>
       </trans-unit>
       <trans-unit id="track_type.captions">
         <source>Captions</source>
-        <target state="needs-translation">Captions</target>
+        <target state="translated">Überschriften</target>
       </trans-unit>
       <trans-unit id="track_type.descriptions">
         <source>Descriptions</source>
-        <target state="needs-translation">Descriptions</target>
+        <target state="translated">Beschreibungen</target>
       </trans-unit>
       <trans-unit id="track_type.chapters">
         <source>Chapters</source>
-        <target state="needs-translation">Chapters</target>
+        <target state="translated">Kapitel</target>
       </trans-unit>
       <trans-unit id="track_type.metadata">
         <source>Metadata</source>
-        <target state="needs-translation">Metadata</target>
+        <target state="translated">Metadaten</target>
       </trans-unit>
       <trans-unit id="tt_content.videos">
         <source>Videos</source>
-        <target state="needs-translation">Videos</target>
+        <target state="translated">Videos</target>
       </trans-unit>
     </body>
   </file>
