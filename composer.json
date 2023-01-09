@@ -1,7 +1,7 @@
 {
 	"name": "wapplersystems/videos",
 	"type": "typo3-cms-extension",
-	"description": "Video player for playlists with cue points in timeline and subtitles",
+	"description": "Extends video file properties and provides a player for playlists, cue points and subtitles",
 	"license": "GPL-2.0-or-later",
 	"keywords": [
 		"TYPO3",
