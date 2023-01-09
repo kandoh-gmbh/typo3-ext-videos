@@ -13,7 +13,7 @@
       </trans-unit>
       <trans-unit id="tx_videos_domain_model_cuepoint.title">
         <source>Title</source>
-        <target state="needs-translation">Title</target>
+        <target state="translated">Titel</target>
       </trans-unit>
       <trans-unit id="tx_videos_domain_model_cuepoint.position">
         <source>Position</source>
@@ -41,15 +41,15 @@
       </trans-unit>
       <trans-unit id="tracks">
         <source>Tracks</source>
-        <target state="needs-translation">Tracks</target>
+        <target state="translated">Spuren</target>
       </trans-unit>
       <trans-unit id="track_language">
         <source>Track language</source>
-        <target state="needs-translation">Track language</target>
+        <target state="translated">Spursprache</target>
       </trans-unit>
       <trans-unit id="track_type">
         <source>Track type</source>
-        <target state="needs-translation">Track type</target>
+        <target state="translated">Spurtyp</target>
       </trans-unit>
       <trans-unit id="track_type.subtitles">
         <source>Subtitles</source>
