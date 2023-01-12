@@ -5,11 +5,11 @@
     <body>
       <trans-unit id="language.default">
         <source>Default</source>
-        <target state="needs-translation">Default</target>
+        <target state="translated">Standard</target>
       </trans-unit>
       <trans-unit id="javascript_disabled">
         <source><![CDATA[To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>]]></source>
-        <target state="needs-translation"><![CDATA[To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>]]></target>
+        <target state="translated"><![CDATA[Um dieses Video anzuzeigen, aktivieren Sie bitte JavaScript und erwägen Sie ein Upgrade auf einen Web-Browser, der <a href="https://videojs.com/html5-video-support/" target="_blank">HTML5-Video unterstützt</a>]]></target>
       </trans-unit>
     </body>
   </file>
