@@ -12,8 +12,6 @@ use TYPO3\CMS\Core\Resource\AbstractFile;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
-defined('TYPO3_MODE') or die();
-
 
 call_user_func(
     function ($extKey, $table) {
@@ -108,7 +106,7 @@ call_user_func(
         ExtensionManagementUtility::addTCAcolumns($table, $newColumns);
 
         ExtensionManagementUtility::addToAllTCAtypes($table, '--linebreak--,poster,tracks,aspect_ratio',
-            AbstractFile::FILETYPE_VIDEO, 'after:duration');
+            (string)AbstractFile::FILETYPE_VIDEO, 'after:duration');
 
 
     },
