@@ -69,10 +69,18 @@ class VideoTagRenderer implements FileRendererInterface
     {
 
         // If autoplay isn't set manually check if $file is a FileReference take autoplay from there
-        if (!isset($options['autoplay']) && $file instanceof FileReference) {
+        if ($file instanceof FileReference) {
             $autoplay = $file->getProperty('autoplay');
             if ($autoplay !== null) {
                 $options['autoplay'] = $autoplay;
+            }
+            $muted = $file->getProperty('muted');
+            if ($muted !== null) {
+                $options['muted'] = $muted;
+            }
+            $loop = $file->getProperty('loop');
+            if ($loop !== null) {
+                $options['loop'] = $loop;
             }
         }
 
@@ -89,10 +97,10 @@ class VideoTagRenderer implements FileRendererInterface
         if (!empty($options['autoplay'])) {
             $attributes[] = 'autoplay';
         }
-        if (!empty($options['muted']) || $file->getProperty('muted')) {
+        if (!empty($options['muted']) || !empty($options['autoplay'])) {
             $attributes[] = 'muted';
         }
-        if (!empty($options['loop']) || $file->getProperty('loop')) {
+        if (!empty($options['loop'])) {
             $attributes[] = 'loop';
         }
 
@@ -100,11 +108,14 @@ class VideoTagRenderer implements FileRendererInterface
             $attributes[] = 'poster="'.$options['poster'].'"';
         }
 
-        if ($file->getOriginalFile()->getProperty('poster')) {
+        if ($file instanceof FileReference) {
+            $file = $file->getOriginalFile();
+        }
+        if ($file->getProperty('poster')) {
             /** @var FileRepository $fileRepository */
             $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 
-            $fileObjects = $fileRepository->findByRelation('sys_file_metadata', 'poster', $file->getOriginalFile()->getMetaData()['uid']);
+            $fileObjects = $fileRepository->findByRelation('sys_file_metadata', 'poster', $file->getMetaData()['uid']);
 
             if (isset($fileObjects[0])) {
                 /** @var FileReference $posterFile */
@@ -118,12 +129,12 @@ class VideoTagRenderer implements FileRendererInterface
         $attributes[] = 'oncontextmenu="return false;"';
 
         $tracks = '';
-        if ($file->getOriginalFile()->getProperty('tracks')) {
+        if ($file->getProperty('tracks')) {
 
             /** @var FileRepository $fileRepository */
             $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 
-            $fileObjects = $fileRepository->findByRelation('sys_file_metadata', 'tracks', $file->getOriginalFile()->getMetaData()['uid']);
+            $fileObjects = $fileRepository->findByRelation('sys_file_metadata', 'tracks', $file->getMetaData()['uid']);
 
             /** @var FileReference $fileObject */
             foreach ($fileObjects as $key => $fileObject) {
