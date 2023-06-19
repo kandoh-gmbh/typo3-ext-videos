@@ -74,6 +74,7 @@ class VideoTagRenderer implements FileRendererInterface
             $autoplay = $file->getProperty('autoplay');
             if ($autoplay) {
                 $attributes['autoplay'] = 'autoplay';
+                $attributes['playsinline'] = 'playsinline';
             }
             $muted = $file->getProperty('muted');
             if ($muted) {
@@ -97,6 +98,7 @@ class VideoTagRenderer implements FileRendererInterface
         }
         if ($options['autoplay'] ?? false) {
             $attributes['autoplay'] = 'autoplay';
+            $attributes['playsinline'] = 'playsinline';
         }
         if (($options['muted'] ?? false) || (($attributes['autoplay'] ?? '') === 'autoplay')) {
             $attributes['muted'] = 'muted';
