@@ -67,45 +67,45 @@ class VideoTagRenderer implements FileRendererInterface
      */
     public function render(FileInterface $file, $width, $height, array $options = [], $usedPathsRelativeToCurrentScript = false)
     {
+        $attributes = [];
 
         // If autoplay isn't set manually check if $file is a FileReference take autoplay from there
         if ($file instanceof FileReference) {
             $autoplay = $file->getProperty('autoplay');
-            if ($autoplay !== null) {
-                $options['autoplay'] = $autoplay;
+            if ($autoplay) {
+                $attributes['autoplay'] = 'autoplay';
             }
             $muted = $file->getProperty('muted');
-            if ($muted !== null) {
-                $options['muted'] = $muted;
+            if ($muted) {
+                $attributes['muted'] = 'muted';
             }
             $loop = $file->getProperty('loop');
-            if ($loop !== null) {
-                $options['loop'] = $loop;
+            if ($loop) {
+                $attributes['loop'] = 'loop';
             }
         }
 
-        $attributes = [];
+
         if ((int)$width > 0) {
             $attributes[] = 'width="' . (int)$width . '"';
         }
         if ((int)$height > 0) {
             $attributes[] = 'height="' . (int)$height . '"';
         }
-        if (!isset($options['controls']) || !empty($options['controls'])) {
-            $attributes[] = 'controls';
+        if ($options['controls'] ?? false) {
+            $attributes['controls'] = 'controls';
         }
-        if (!empty($options['autoplay'])) {
-            $attributes[] = 'autoplay';
+        if ($options['autoplay'] ?? false) {
+            $attributes['autoplay'] = 'autoplay';
         }
-        if (!empty($options['muted']) || !empty($options['autoplay'])) {
-            $attributes[] = 'muted';
+        if (($options['muted'] ?? false) || (($attributes['autoplay'] ?? '') === 'autoplay')) {
+            $attributes['muted'] = 'muted';
         }
-        if (!empty($options['loop'])) {
-            $attributes[] = 'loop';
+        if ($options['loop'] ?? false) {
+            $attributes['loop'] = 'loop';
         }
-
-        if (!empty($options['poster'])) {
-            $attributes[] = 'poster="'.$options['poster'].'"';
+        if ($options['poster'] ?? false) {
+            $attributes['poster'] = 'poster="'.$options['poster'].'"';
         }
 
         if ($file instanceof FileReference) {
@@ -120,7 +120,7 @@ class VideoTagRenderer implements FileRendererInterface
             if (isset($fileObjects[0])) {
                 /** @var FileReference $posterFile */
                 $posterFile = $fileObjects[0];
-                $attributes[] = 'poster="' . $posterFile->getPublicUrl() . '"';
+                $attributes['poster'] = 'poster="' . $posterFile->getPublicUrl() . '"';
             }
 
         }
