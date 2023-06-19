@@ -104,6 +104,9 @@ class VideoTagRenderer implements FileRendererInterface
         if ($options['loop'] ?? false) {
             $attributes['loop'] = 'loop';
         }
+        if ($options['playsinline'] ?? false) {
+            $attributes['playsinline'] = 'playsinline';
+        }
         if ($options['poster'] ?? false) {
             $attributes['poster'] = 'poster="'.$options['poster'].'"';
         }
