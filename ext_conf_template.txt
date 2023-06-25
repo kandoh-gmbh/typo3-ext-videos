@@ -1,0 +1,3 @@
+
+# cat=Frontend; type=boolean; label=Add controls to all server side hosted videos
+controls = 1

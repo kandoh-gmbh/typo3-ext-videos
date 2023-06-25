@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Videos\Resource\Rendering;
 
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Resource\FileRepository;
@@ -69,6 +70,9 @@ class VideoTagRenderer implements FileRendererInterface
     {
         $attributes = [];
 
+        $showControls = GeneralUtility::makeInstance(ExtensionConfiguration::class)
+            ->get('videos', 'controls');
+
         // If autoplay isn't set manually check if $file is a FileReference take autoplay from there
         if ($file instanceof FileReference) {
             $autoplay = $file->getProperty('autoplay');
@@ -93,7 +97,7 @@ class VideoTagRenderer implements FileRendererInterface
         if ((int)$height > 0) {
             $attributes[] = 'height="' . (int)$height . '"';
         }
-        if ($options['controls'] ?? false) {
+        if (($options['controls'] ?? false) || $showControls === '1') {
             $attributes['controls'] = 'controls';
         }
         if ($options['autoplay'] ?? false) {
