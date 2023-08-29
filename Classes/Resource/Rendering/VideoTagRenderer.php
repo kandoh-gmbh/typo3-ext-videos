@@ -70,7 +70,7 @@ class VideoTagRenderer implements FileRendererInterface
     {
         $attributes = [];
 
-        $showControls = GeneralUtility::makeInstance(ExtensionConfiguration::class)
+        $showControlsGlobal = GeneralUtility::makeInstance(ExtensionConfiguration::class)
             ->get('videos', 'controls');
 
         // If autoplay isn't set manually check if $file is a FileReference take autoplay from there
@@ -97,7 +97,14 @@ class VideoTagRenderer implements FileRendererInterface
         if ((int)$height > 0) {
             $attributes[] = 'height="' . (int)$height . '"';
         }
-        if (($options['controls'] ?? false) || $showControls === '1') {
+        $showControls = ($showControlsGlobal === '1');
+        if (isset($options['controls']) && (int)$options['controls'] === 0) {
+            $showControls = false;
+        }
+        if (isset($options['controls']) && (int)$options['controls'] === 1) {
+            $showControls = true;
+        }
+        if ($showControls) {
             $attributes['controls'] = 'controls';
         }
         if ($options['autoplay'] ?? false) {
