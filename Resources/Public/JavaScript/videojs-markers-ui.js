@@ -232,8 +232,13 @@
       if (this.items.length > 0) {
 
         this.player_.el().parentNode.className += ' vjs-markers-sidebar';
-
         this.player_.el().parentNode.appendChild(this.el_);
+
+        let el = this.player_.el();
+        let wrapper = document.createElement('div');
+        wrapper.classList.add('vjs-player-wrapper');
+        el.parentNode.insertBefore(wrapper, el);
+        wrapper.appendChild(el);
 
       }
 

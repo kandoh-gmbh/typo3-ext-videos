@@ -10,7 +10,7 @@
     justify-content: space-between;
 }
 
-.tx-videos__player .video-js {
+.tx-videos__player .vjs-player-wrapper {
     -webkit-box-flex: 3;
     -ms-flex: 3 1 70%;
     flex: 3 1 70%;
