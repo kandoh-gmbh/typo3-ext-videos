@@ -11,10 +11,10 @@ declare(strict_types=1);
 namespace WapplerSystems\Videos\Resource\Rendering;
 
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Resource\FileRepository;
-use TYPO3\CMS\Core\Resource\Rendering\FileRendererInterface;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -22,7 +22,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Class VideoTagRenderer
  */
-class VideoTagRenderer implements FileRendererInterface
+class VideoTagRenderer extends \TYPO3\CMS\Core\Resource\Rendering\VideoTagRenderer
 {
     /**
      * Mime types that can be used in the HTML Video tag
@@ -68,6 +68,9 @@ class VideoTagRenderer implements FileRendererInterface
      */
     public function render(FileInterface $file, $width, $height, array $options = [], $usedPathsRelativeToCurrentScript = false)
     {
+        if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
+            return parent::render($file, $width, $height, $options, $usedPathsRelativeToCurrentScript);
+        }
         $attributes = [];
 
         $showControlsGlobal = GeneralUtility::makeInstance(ExtensionConfiguration::class)
