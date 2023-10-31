@@ -184,7 +184,9 @@ class VideoTagRenderer extends \TYPO3\CMS\Core\Resource\Rendering\VideoTagRender
                 $attributes[] = $key . '="' . htmlspecialchars($options[$key]) . '"';
             }
         }
-        $attributes[] = 'data-setup="{}"';
+        if (strpos($options['class'] ?? '', 'no-videojs') === false) {
+            $attributes[] = 'data-setup="{}"';
+        }
 
         return sprintf(
             '<video%s><source src="%s" type="%s">%s</video>',
