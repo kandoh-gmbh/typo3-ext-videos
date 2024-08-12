@@ -1,7 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:videos="http://typo3.org/ns/WapplerSystems/Videos/ViewHelpers" data-namespace-typo3-fluid="true">
 
 <f:media
-    id="video{data.uid}"
+    id="video{file.uid}"
     class="video-js vjs-big-play-centered {file -> videos:aspectRatioClass()}"
     file="{file}"
     width="{dimensions.width}"
@@ -10,9 +10,9 @@
     title="{file.title}"
 />
 <script>
-    var player{data.uid} = videojs('video{data.uid}');
-    player{data.uid}.markers();
-    player{data.uid}.markersUi();
+    var player{file.uid} = videojs('video{file.uid}');
+    player{file.uid}.markers();
+    player{file.uid}.markersUi();
 </script>
 
 </html>
