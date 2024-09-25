@@ -9,11 +9,11 @@ $EM_CONF['videos'] = [
     'author_company' => 'WapplerSystems',
     'state' => 'stable',
     'clearCacheOnLoad' => 1,
-    'version' => '12.0.9',
+    'version' => '13.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '12.4.0-12.4.99',
-            'filemetadata' => ''
+            'typo3' => '13.0.0-13.4.99',
+            'filemetadata' => '13.0.0'
         ],
         'conflicts' => [
         ],
