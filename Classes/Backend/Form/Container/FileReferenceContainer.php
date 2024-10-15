@@ -11,19 +11,34 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Videos\Backend\Form\Container;
 
+use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Backend\Form\Event\ModifyFileReferenceControlsEvent;
 use TYPO3\CMS\Backend\Form\Event\ModifyFileReferenceEnabledControlsEvent;
+use TYPO3\CMS\Backend\Form\InlineStackProcessor;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Imaging\Icon;
+use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 class FileReferenceContainer extends \TYPO3\CMS\Backend\Form\Container\FileReferenceContainer {
 
+
+    public function __construct(
+        private readonly IconFactory $iconFactory,
+        private readonly InlineStackProcessor $inlineStackProcessor,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ResourceFactory $resourceFactory,
+        private readonly ConnectionPool $connectionPool,
+        private readonly UriBuilder $uriBuilder,
+        private readonly MetaDataRepository $metaDataRepository,
+    ) {}
 
     protected function renderFileReferenceHeaderControl(): string
     {

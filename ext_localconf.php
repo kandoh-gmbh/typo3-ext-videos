@@ -11,7 +11,7 @@ $rendererRegistry->registerRendererClass(VideoTagRenderer::class);
 
 
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1712229824] = [
-    'nodeName' => FileReferenceContainer::NODE_TYPE_IDENTIFIER,
+    'nodeName' => 'fileReferenceContainer',
     'priority' => '70',
     'class' => FileReferenceContainer::class,
 ];
