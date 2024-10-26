@@ -38,7 +38,9 @@ class FileReferenceContainer extends \TYPO3\CMS\Backend\Form\Container\FileRefer
         private readonly ConnectionPool $connectionPool,
         private readonly UriBuilder $uriBuilder,
         private readonly MetaDataRepository $metaDataRepository,
-    ) {}
+    ) {
+        parent::__construct($iconFactory, $inlineStackProcessor, $eventDispatcher, $resourceFactory, $connectionPool, $uriBuilder, $metaDataRepository);
+    }
 
     protected function renderFileReferenceHeaderControl(): string
     {
