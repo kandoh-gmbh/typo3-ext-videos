@@ -8,8 +8,7 @@ declare(strict_types=1);
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Core\Resource\AbstractFile;
-use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Core\Resource\FileType;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 
@@ -30,7 +29,7 @@ call_user_func(
                     // to use the newsPalette and imageoverlayPalette instead of the basicoverlayPalette
                     'overrideChildTca' => [
                         'types' => [
-                            File::FILETYPE_IMAGE => [
+                            FileType::IMAGE->value => [
                                 'showitem' => '
                                         --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette,
                                         --palette--;;imageoverlayPalette,
@@ -50,7 +49,7 @@ call_user_func(
                     'allowed' => 'vtt',
                     'overrideChildTca' => [
                         'types' => [
-                            File::FILETYPE_TEXT => [
+                            FileType::TEXT->value => [
                                 'showitem' => '--palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.basicoverlayPalette;basicoverlayPalette,
                                     --palette--;;filePalette,track_language,track_type'
                             ],
@@ -82,7 +81,7 @@ call_user_func(
         ExtensionManagementUtility::addTCAcolumns($table, $newColumns);
 
         ExtensionManagementUtility::addToAllTCAtypes($table, '--linebreak--,poster,tracks,aspect_ratio',
-            (string)AbstractFile::FILETYPE_VIDEO, 'after:duration');
+            (string)FileType::VIDEO->value, 'after:duration');
 
 
     },
