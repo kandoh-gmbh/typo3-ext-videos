@@ -21,7 +21,6 @@ use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
-use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -37,9 +36,15 @@ class FileReferenceContainer extends \TYPO3\CMS\Backend\Form\Container\FileRefer
         private readonly ResourceFactory $resourceFactory,
         private readonly ConnectionPool $connectionPool,
         private readonly UriBuilder $uriBuilder,
-        private readonly MetaDataRepository $metaDataRepository,
     ) {
-        parent::__construct($iconFactory, $inlineStackProcessor, $eventDispatcher, $resourceFactory, $connectionPool, $uriBuilder, $metaDataRepository);
+        parent::__construct(
+            $iconFactory,
+            $inlineStackProcessor,
+            $eventDispatcher,
+            $resourceFactory,
+            $connectionPool,
+            $uriBuilder,
+        );
     }
 
     protected function renderFileReferenceHeaderControl(): string

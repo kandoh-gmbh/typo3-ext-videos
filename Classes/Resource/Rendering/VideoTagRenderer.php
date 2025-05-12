@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Videos\Resource\Rendering;
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Resource\FileInterface;
@@ -28,6 +29,7 @@ class VideoTagRenderer extends \TYPO3\CMS\Core\Resource\Rendering\VideoTagRender
      * Mime types that can be used in the HTML Video tag
      *
      * @var array
+     * @phpstan-var string[]
      */
     protected $possibleMimeTypes = ['video/mp4', 'video/webm', 'video/ogg', 'application/ogg'];
 
@@ -40,21 +42,12 @@ class VideoTagRenderer extends \TYPO3\CMS\Core\Resource\Rendering\VideoTagRender
      *
      * @return int
      */
+    #[\Override]
     public function getPriority()
     {
         return 100;
     }
 
-    /**
-     * Check if given File(Reference) can be rendered
-     *
-     * @param FileInterface $file File or FileReference to render
-     * @return bool
-     */
-    public function canRender(FileInterface $file)
-    {
-        return in_array($file->getMimeType(), $this->possibleMimeTypes, true);
-    }
 
     /**
      * Render for given File(Reference) HTML output
@@ -63,18 +56,19 @@ class VideoTagRenderer extends \TYPO3\CMS\Core\Resource\Rendering\VideoTagRender
      * @param int|string $width TYPO3 known format; examples: 220, 200m or 200c
      * @param int|string $height TYPO3 known format; examples: 220, 200m or 200c
      * @param array $options controls = TRUE/FALSE (default TRUE), autoplay = TRUE/FALSE (default FALSE), loop = TRUE/FALSE (default FALSE)
-     * @param bool $usedPathsRelativeToCurrentScript See $file->getPublicUrl()
      * @return string
      */
-    public function render(FileInterface $file, $width, $height, array $options = [], $usedPathsRelativeToCurrentScript = false)
+    #[\Override]
+    public function render(FileInterface $file, $width, $height, array $options = [])
     {
-        if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
-            return parent::render($file, $width, $height, $options, $usedPathsRelativeToCurrentScript);
+        if (
+            ($request = $GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
+            && ApplicationType::fromRequest($request)->isBackend()
+        ) {
+            return parent::render($file, $width, $height, $options);
         }
-        $attributes = [];
 
-        $showControlsGlobal = GeneralUtility::makeInstance(ExtensionConfiguration::class)
-            ->get('videos', 'controls');
+        $attributes = [];
 
         // If autoplay isn't set manually check if $file is a FileReference take autoplay from there
         if ($file instanceof FileReference) {
@@ -83,10 +77,12 @@ class VideoTagRenderer extends \TYPO3\CMS\Core\Resource\Rendering\VideoTagRender
                 $attributes['autoplay'] = 'autoplay';
                 $attributes['playsinline'] = 'playsinline';
             }
+
             $muted = $file->getProperty('muted');
             if ($muted) {
                 $attributes['muted'] = 'muted';
             }
+
             $loop = $file->getProperty('loop');
             if ($loop) {
                 $attributes['loop'] = 'loop';
@@ -100,100 +96,134 @@ class VideoTagRenderer extends \TYPO3\CMS\Core\Resource\Rendering\VideoTagRender
         if ((int)$height > 0) {
             $attributes[] = 'height="' . (int)$height . '"';
         }
+
+        $showControlsGlobal = GeneralUtility::makeInstance(ExtensionConfiguration::class)
+            ->get('videos', 'controls');
+
         $showControls = ($showControlsGlobal === '1');
-        if (isset($options['controls']) && (int)$options['controls'] === 0) {
-            $showControls = false;
-        }
-        if (isset($options['controls']) && (int)$options['controls'] === 1) {
-            $showControls = true;
+        if (isset($options['controls'])) {
+            $showControls = (int)$options['controls'] === 1;
         }
         if ($showControls) {
             $attributes['controls'] = 'controls';
         }
+
         if ($options['autoplay'] ?? false) {
             $attributes['autoplay'] = 'autoplay';
             $attributes['playsinline'] = 'playsinline';
         }
+
         if (($options['muted'] ?? false) || (($attributes['autoplay'] ?? '') === 'autoplay')) {
             $attributes['muted'] = 'muted';
         }
+
         if ($options['loop'] ?? false) {
             $attributes['loop'] = 'loop';
         }
+
         if ($options['playsinline'] ?? false) {
             $attributes['playsinline'] = 'playsinline';
         }
-        if ($options['poster'] ?? false) {
-            $attributes['poster'] = 'poster="'.$options['poster'].'"';
-        }
 
-        if ($file instanceof FileReference) {
-            $file = $file->getOriginalFile();
-        }
-        if ($file->getProperty('poster')) {
-            /** @var FileRepository $fileRepository */
-            $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+        $poster = $options['poster'] ?? false;
+        if (! is_string($poster)
+            && $file instanceof FileReference
+            && $file->getOriginalFile()->getProperty('poster')
+        ) {
+            $fileMetadata = $file->getOriginalFile()->getMetaData();
+            $fileObjects = $this->getFileRepository()->findByRelation(
+                'sys_file_metadata',
+                'poster',
+                (int)$fileMetadata['uid']
+            );
 
-            $fileObjects = $fileRepository->findByRelation('sys_file_metadata', 'poster', $file->getMetaData()['uid']);
-
-            if (isset($fileObjects[0])) {
-                /** @var FileReference $posterFile */
-                $posterFile = $fileObjects[0];
-                $attributes['poster'] = 'poster="' . $posterFile->getPublicUrl() . '"';
+            $posterFile = $fileObjects[0] ?? null;
+            if ($posterFile instanceof FileReference) {
+                $options['poster'] = $posterFile->getPublicUrl();
             }
+        }
 
+        if (is_string($poster) && ! empty($poster)) {
+            $attributes['poster'] = 'poster="'. $options['poster'] .'"';
+        }
+
+
+        $tracks = '';
+        if (
+            $file instanceof FileReference
+            && $file->getOriginalFile()->getProperty('tracks')
+        ) {
+            $site = $this->getSiteFinder()->getSiteByPageId($file->getProperty('pid') ?: $GLOBALS['TSFE']->id);
+            $defaultLanguage = $site->getDefaultLanguage();
+
+            $fileMetadata = $file->getOriginalFile()->getMetaData();
+            $fileObjects = $this->getFileRepository()->findByRelation(
+                'sys_file_metadata',
+                'tracks',
+                (int)$fileMetadata['uid']
+            );
+
+            foreach ($fileObjects as $fileObject) {
+                $trackLanguage = (int)$fileObject->getProperty('track_language');
+                $trackType = (string)$fileObject->getProperty('track_type') ?: 'subtitles';
+                $languageTitle = LocalizationUtility::translate('language.default', 'videos');
+
+                $isoCode = $defaultLanguage->getLocale()->getLanguageCode();
+
+                if ($trackLanguage > -1) {
+                    try {
+                        $language = $site->getLanguageById($trackLanguage);
+                        $languageTitle = $language->getTitle();
+                        $isoCode = $language->getLocale()->getLanguageCode();
+                    } catch (\InvalidArgumentException) {
+                        // silent fail
+                    }
+                }
+
+                if (! empty($fileObject->getPublicUrl())) {
+                    $tracks .= sprintf(
+                        '<track label="%s" kind="%s" srclang="%s" src="%s">',
+                        $languageTitle,
+                        $trackType,
+                        $isoCode,
+                        (string)$fileObject->getPublicUrl()
+                    );
+                }
+            }
         }
 
         /* TODO: make it configurable */
         $attributes[] = 'oncontextmenu="return false;"';
 
-        $tracks = '';
-        if ($file->getProperty('tracks')) {
-
-            /** @var FileRepository $fileRepository */
-            $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-
-            $fileObjects = $fileRepository->findByRelation('sys_file_metadata', 'tracks', $file->getMetaData()['uid']);
-
-            /** @var FileReference $fileObject */
-            foreach ($fileObjects as $key => $fileObject) {
-
-                $trackLanguage = $fileObject->getProperty('track_language');
-                $trackType = $fileObject->getProperty('track_type');
-                $languageTitle = LocalizationUtility::translate('language.default', 'videos');
-
-                $defaultLanguage = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($GLOBALS['TSFE']->id)->getDefaultLanguage();
-
-                $isoCode = $defaultLanguage->getTwoLetterIsoCode();
-
-                if ($trackLanguage > -1) {
-                    $language = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($GLOBALS['TSFE']->id)->getLanguageById($trackLanguage);
-                    if ($language) {
-                        $languageTitle = $language->getTitle();
-                        $isoCode = $language->getTwoLetterIsoCode();
-                    }
-                }
-
-                $tracks .= '<track label="'.$languageTitle.'" kind="'.($trackType ?: 'subtitles').'" srclang="'.$isoCode.'" src="' . $fileObject->getPublicUrl() . '">';
-            }
-        }
-
-
-        foreach (['class', 'dir', 'id', 'lang', 'style', 'title', 'accesskey', 'tabindex', 'onclick'] as $key) {
+        foreach (['class', 'dir', 'id', 'lang', 'style', 'title', 'accesskey', 'tabindex', 'onclick', 'controlsList', 'preload'] as $key) {
             if (!empty($options[$key])) {
                 $attributes[] = $key . '="' . htmlspecialchars($options[$key]) . '"';
             }
         }
+
         if (strpos($options['class'] ?? '', 'no-videojs') === false) {
             $attributes[] = 'data-setup="{}"';
         }
 
+        // Clean up duplicate attributes
+        $attributes = array_unique($attributes);
+
         return sprintf(
             '<video%s><source src="%s" type="%s">%s</video>',
             empty($attributes) ? '' : ' ' . implode(' ', $attributes),
-            htmlspecialchars($file->getPublicUrl($usedPathsRelativeToCurrentScript)),
+            htmlspecialchars((string)$file->getPublicUrl()),
             $file->getMimeType(),
             $tracks
         );
+    }
+
+    protected function getFileRepository(): FileRepository
+    {
+        return GeneralUtility::makeInstance(FileRepository::class);
+    }
+
+    protected function getSiteFinder(): SiteFinder
+    {
+        return GeneralUtility::makeInstance(SiteFinder::class);
     }
 }
