@@ -139,7 +139,7 @@ class VideoTagRenderer extends \TYPO3\CMS\Core\Resource\Rendering\VideoTagRender
 
             $posterFile = $fileObjects[0] ?? null;
             if ($posterFile instanceof FileReference) {
-                $options['poster'] = $posterFile->getPublicUrl();
+                $poster = $posterFile->getPublicUrl();
             }
         }
 
