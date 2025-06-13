@@ -144,7 +144,7 @@ class VideoTagRenderer extends \TYPO3\CMS\Core\Resource\Rendering\VideoTagRender
         }
 
         if (is_string($poster) && ! empty($poster)) {
-            $attributes['poster'] = 'poster="'. $options['poster'] .'"';
+            $attributes['poster'] = 'poster="'. $poster .'"';
         }
 
 
